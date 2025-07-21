@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 
+
 int calc_sum(int *nums, int size)
 {
     int sum = 0;
