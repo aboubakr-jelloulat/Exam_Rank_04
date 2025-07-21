@@ -1,48 +1,89 @@
 #include <unistd.h>
-#include <stdlib.h>
 
-int	len(char *str){int i = 0;while (str[i])i++;return i;}
-int	to_remove_func(char *str){int open = 0, close = 0;for (int i = 0; i < len(str); i++){if (str[i] == '(')open ++;if (str[i] == ')')if (open)open--;close++;}return open + close;}
-int	is_balanced(char *str){int balanced = 0;for (int i = 0; i < len(str); i++){if (str[i] == '(')balanced++;else if (str[i] == ')'){if (!balanced)	return 0;else balanced--;}}return balanced == 0;}
-void	display(char *str){while (*str)write (1, str++, 1);write(1, "\n", 1);}
-
-void	RemoveInvalidPara(char *str, int level, int to_remove, int removed, char *cur, int pos)
+int ft_strlen(char *str)
 {
-	if (str[level])
-	{
-		cur = 0;
-		if (to_remove == removed && is_balanced(cur))
-			display(cur);
-		return ;
-	}
-	if (str[level] == ')' || str[level] == '(')
-	{
-		// 1 removed 
+    int len = 0;
 
-		cur[pos] = '_';
-		RemoveInvalidPara(str, level ++, to_remove, removed++, cur, pos++);
+    while (str[len])
+        len++;
+    return len;
+}
+int to_remove(char *str)
+{
+    int open = 0, close = 0, i = 0;
 
-		// 2 keep 
+    while (str[i])
+    {
+        if (str[i] == '(')   
+            open ++;
 
-		cur[pos] = str[level];
-		RemoveInvalidPara(str, level ++, to_remove, removed, cur, pos++);
-	}
-	else // space 
-	{
-		cur[pos] = str[level];
-		RemoveInvalidPara(str, level ++, to_remove, removed, cur, pos++);
-	}
+        else if (str[i] == ')')
+        {
+            if (open)
+                open --;
+            else
+                close ++;
+        }
+        
+        i++;
+    }
+    return open + close;
+}
 
+int isBalanced(char *str)
+{
+    int balanced = 0, i = 0;
+
+    while (str[i])
+    {
+        if (str[i] == '(')
+            balanced ++;
+
+        else if (str[i] == ')')
+        {
+            if (!balanced)
+                return 0;
+            balanced--;
+        }
+        i++;
+    }
+    return balanced == 0;
+}
+
+
+void    rip(char *str, int i, int len, int to_remove)
+{
+    if (i == len)
+    {
+        if (!to_remove  && isBalanced(str))
+        {
+            write(1, str, len);
+            write(1, "\n", 1);
+        }
+        return ;
+    }
+
+    if (str[i] != '(' && str[i] != ')')
+    {
+        rip(str, i + 1, len, to_remove);
+        return ;
+    }
+
+    if (to_remove)
+    {
+        char old = str[i];
+        str[i] = ' ';
+        rip(str, i + 1, len, to_remove - 1);
+        str[i] = old;
+    }
+    rip(str, i + 1, len, to_remove);
 }
 
 int main(int ac, char **av)
 {
-	if (ac != 2 || av[1])	return 1;
-	
-	char cur[len(av[1] + 1)];
+    if (ac != 2)    return (1);
 
-	RemoveInvalidPara(av[1], 0, to_remove_func(av[1]), 0, cur, 0);
-	
-
-	return 0;
+    rip(av[1], 0, ft_strlen(av[1]), to_remove(av[1]));
+    
+    return (0);
 }
