@@ -1,0 +1,37 @@
+rip
+===============================================================================
+allowed files: *.c, *.h
+allowed functions: puts(), write()
+===============================================================================
+Write a program that will take as argument a string containing only parenthesis.
+
+If the parenthesis are unbalanced (for example '())'), your program shall remove
+the minimum number of parenthesis for the expression to be balanced.
+
+You will then print all the solutions. (can be more than one)
+
+The order of the solutions is not important.
+===============================================================================
+
+Examples:
+
+> ./a.out '(()' | cat -e
+ ()$
+( )$
+> ./a.out '((()()())())' | cat -e
+((()()())())$
+> ./a.out '()())()' | cat -e
+()() ()$
+()( )()$
+( ())()$
+> ./a.out '(()(()(' | cat -e 
+(()  ) $
+( )( ) $
+( ) () $
+()( ) $
+() () $
+
+===============================================================================
+my notes:
+	Q: what about  '))))' ?
+	A: four spaces '    '
