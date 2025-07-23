@@ -8,6 +8,7 @@ int ft_strlen(char *str)
         len++;
     return len;
 }
+
 int to_remove(char *str)
 {
     int open = 0, close = 0, i = 0;
