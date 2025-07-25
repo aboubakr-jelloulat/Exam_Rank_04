@@ -25,7 +25,6 @@ void display_board(int *board, int n)
     fprintf(stdout, "\n");
 }
 
-
 int is_valid(int *board, int col, int row)
 {
     for (int i = 0; i < col; i++)
@@ -38,7 +37,6 @@ int is_valid(int *board, int col, int row)
     }
     return 1;
 }
-
 
 void n_queens(int *board, int col, int n)
 {
